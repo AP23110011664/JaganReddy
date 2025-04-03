@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repositories</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>GitHub Repositories</h2>
+    <input type="text" id="username" placeholder="Enter GitHub username">
+    <button onclick="fetchRepos()">Fetch Repos</button>
+    <p id="status"></p>
+    <table id="repoTable">
+        <thead>
+            <tr>
+                <th>Repository Name</th>
+                <th>Description</th>
+                <th>Language</th>
+                <th>Stars</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        function fetchRepos() {
+            var username = document.getElementById("username").value;
+            var url = "https://api.github.com/users/" + username + "/repos";
+            var xhr = new XMLHttpRequest();
+            document.getElementById("status").textContent = "Fetching data...";
+
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+				
+					var repos = JSON.parse(xhr.responseText); // Parse JSON response
+            var tableBody = document.querySelector("#repoTable tbody");
+            tableBody.innerHTML = ""; // Clear previous data
+
+            // Loop through the repositories and insert into the table
+            repos.forEach(function(repo) {
+                var row = tableBody.insertRow();
+                row.insertCell(0).textContent = repo.name;
+                row.insertCell(1).textContent = repo.description || "No description";
+                row.insertCell(2).textContent = repo.language || "N/A";
+                row.insertCell(3).textContent = repo.stargazers_count;
+            });
+
+            document.getElementById("status").textContent = "Repositories loaded successfully.";
+				
+                } else if (xhr.readyState === 4) {
+                    document.getElementById("status").textContent = "Error fetching repositories.";
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
