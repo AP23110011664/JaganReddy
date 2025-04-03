@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+
+    <style>
+    .form-group {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .input-container1 {
+        width: 40%;
+    }
+
+    .input-container2 {
+        width: 75%;
+    }
+
+    input[type="checkbox"] {
+        accent-color: #007bff;
+        background-color: white;
+    }
+
+    body, button {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    h3 {
+        color: #333;
+        font-size: 22px;
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: auto;
+        margin-top: 30px;
+    }
+
+    #fname, #lname, #age, #pin, #email, #password {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: white;
+        color: #333;
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 90%;
+    }
+
+    label {
+        color: #333;
+        font-weight: bold;
+    }
+
+    button {
+        padding: 10px 15px;
+        border-radius: 6px;
+        width: 96%;
+        font-size: 16px;
+        border: 1px solid #007bff;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+
+    button:active {
+        transform: scale(0.98);
+    }
+
+    input::placeholder {
+        color: #888;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #333;
+        background-color: white;
+        border-bottom: 2px solid #ccc;
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        outline: none;
+        border-bottom: 2px solid #007bff;
+        box-shadow: 0px 0px 6px rgba(0, 123, 255, 0.5);
+    }
+
+    #togglePassword {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        font-size: 16px;
+        color: #555;
+        margin-left: 5px;
+    }
+    </style>
+</head>
+<body>
+    <form id="form" onsubmit="validateForm()">
+            <h3>Log In</h3>
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="lname">Last name:</label><br><br>
+            <input type="text" id="lname" name="lname"><br><br>
+
+            <div class="form-group">
+                <div class="input-container1">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age">
+                </div>
+            
+                <div class="input-container2">
+                    <label for="pin">PIN:</label>
+                    <input type="number" id="pin" name="pin" maxlength="6">
+                </div>
+            </div>
+            
+
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email"><br><br>
+
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password">
+            
+            <input type="checkbox" id="togglePassword" onclick="togglePassword()">
+            <label> 👀 Show Password</label>
+            <br><br>
+            
+
+            <button type="submit" >Submit</button>
+
+    </form>
+
+    <script>
+        document.getElementById("togglePassword").addEventListener("change", function () {
+                let password = document.getElementById("password");
+                password.type = this.checked ? "text" : "password";
+            });
+    
+
+        function validateName(name){
+            let namePattern = /^[a-zA-Z]+$/;
+            return namePattern.test(name);
+        }
+
+        function validName(){
+            event.preventDefault();
+            let fname = document.getElementById("fname").value.trim();
+            let lname = document.getElementById("lname").value.trim();
+            
+            let fullname = fname + " " + lname;
+
+            if (fname.length == 0 && lname.length == 0){
+                alert("First name and Last name cannot be empty");
+                let fborder = document.getElementById("fname").style.border = "2px solid red";
+                let lborder = document.getElementById("lname").style.border = "2px solid red";
+                return false;
+            }
+
+            for(let i=0;i<fullname.length;i++){
+                if(!(fullname[i] ===" " || fullname[i] >='A' && fullname[i] <='Z' || fullname[i] >='a' && fullname[i] <='z')){
+                    // let fborder = document.getElementById("fname").style.border = "border: 2px solid red;box-shadow: 0 0 8px red;transition: 0.3s;";
+                    let fborder = document.getElementById("fname").style.border = "2px solid red";
+                    let lborder = document.getElementById("lname").style.border = "2px solid red";
+                    return false;
+                }
+            }
+            let fborder = document.getElementById("fname").style.border = "2px solid green";
+            let lborder = document.getElementById("lname").style.border = "2px solid green";
+            return true;
+        }
+
+        function validAge(){
+            event.preventDefault();
+            let age = document.getElementById("age").value;
+            if(age < 18 || age > 60){
+                let aborder = document.getElementById("age").style.border = "2px solid red";
+                alert("Age must be greater than 18 and less than 60");
+                return false;
+            }
+            let aborder = document.getElementById("age").style.border = "2px solid green";
+            return true;
+        }
+
+        function validPin(){
+            event.preventDefault();
+            let pin = document.getElementById("pin").value;
+            if(pin.length != 6){
+                let pborder = document.getElementById("pin").style.border = "2px solid red";
+                alert("PIN must be 6 digits");
+                return false;
+            }
+            let pborder = document.getElementById("pin").style.border = "2px solid green";
+            return true;
+        }
+
+        function validEmail(){
+            event.preventDefault();
+            let email = document.getElementById("email").value;
+            if (email.length == 0){
+                let eborder = document.getElementById("email").style.border = "2px solid red";
+                alert("Email cannot be empty");
+                return false;
+            }
+            for(let i=0;i<email.length;i++){
+                if(!(email[i] ==="@" || email[i] ==="." || email[i] >='A' && email[i] <='Z' || email[i] >='a' && email[i] <='z' || email[i] >='0' && email[i] <='9')){
+                    let eborder = document.getElementById("email").style.border = "2px solid red";
+                    alert("Invalid Email\nEmail must contain @ and .\nExample:your_name@domain.com");
+                    return false;
+                }
+                let eborder = document.getElementById("email").style.border = "2px solid green";
+                return true;
+            }
+        }
+
+        function validPassword(){
+            event.preventDefault();
+
+            let password = document.getElementById("password").value.trim();
+            let up = 0;
+            let lc = 0;
+            let num = 0;
+            let cha = 0;
+
+            for(let i=0;i<password.length;i++){
+                if(!(password[i]!="" || password[i]!=" ")){
+                    let pborder = document.getElementById("password").style.border = "2px solid red";
+                    alert("Password cannot be empty");
+                    return false;
+                }
+
+                if(password[i]>='A' && password[i]<='Z'){
+                    up++;
+                }
+                if(password[i]>='a' && password[i]<='z'){
+                    lc++;
+                }
+                if(password[i]>='0' && password[i]<='9'){
+                    num++;
+                }
+                else{
+                    cha++;
+                }
+            }
+            if(up>0 && lc>0 && num>0 && cha>0 && password.length>=8){
+                document.getElementById("password").style.border = "2px solid green";
+                return true;
+            }else {
+                document.getElementById("password").style.border = "2px solid red";
+                alert("Password must contain atleast 1 uppercase, 1 lowercase, 1 number and 1 special character and must be atleast 8 characters long");
+                return false;
+            }
+        }
+
+        function validateForm(){
+            event.preventDefault();
+
+            let isNameValid = validName();
+            let isAgeValid = validAge();
+            let isPinValid = validPin();
+            let isEmailValid = validEmail();
+            let isPasswordValid = validPassword();
+            if(isNameValid && isAgeValid && isPinValid && isEmailValid && isPasswordValid){
+                document.getElementById("form").submit();
+            }
+        }
+
+        function togglePassword() {
+            let show = document.getElementById("togglePassword");
+            let password = document.getElementById("password");
+            password.type = show.checked ? "text" : "password";
+        }
+
+
+    </script>
+</body>
+</html>
