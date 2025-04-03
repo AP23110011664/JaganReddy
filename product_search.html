@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+        .search-box {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 30%;
+            margin: 10px;
+            display: inline-block;
+            text-align: center;
+        }
+        .product-card img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <a href="A6_index.html" target="_self">Back to Homepage</a><br>
+    <div class="container">
+        <h2>Product Search</h2>
+        <input type="text" id="searchBox" class="search-box" placeholder="Search for a product..." oninput="searchProducts()">
+        <div id="productsContainer"></div>
+    </div>
+    <script>
+        var productsData = [];
+        
+        function fetchProducts() {
+            fetch('https://fakestoreapi.com/products')
+                .then(function(res) { return res.json(); })
+                .then(function(products) {
+                    productsData = products;
+                    displayProducts(products);
+                });
+        }
+        
+        function searchProducts() {
+            var searchQuery = document.getElementById('searchBox').value.toLowerCase();
+            var filteredProducts = productsData.filter(function(product) {
+                return product.title.toLowerCase().includes(searchQuery);
+            });
+            displayProducts(filteredProducts);
+        }
+        
+        function displayProducts(products) {
+            var container = document.getElementById('productsContainer');
+            container.innerHTML = "";
+            for (var i = 0; i < products.length; i++) {
+                var product = products[i];
+                container.innerHTML +=
+                    '<div class="product-card">' +
+                        '<img src="' + product.image + '" alt="' + product.title + '">' +
+                        '<h3>' + product.title + '</h3>' +
+                        '<p>$' + product.price + '</p>' +
+                    '</div>';
+            }
+        }
+        
+        fetchProducts();
+    </script>
+</body>
+</html>
