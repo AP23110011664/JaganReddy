@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Prime Numbers</h2>
+    <input type="text" id="demo" placeholder="Enter a number">
+    <button onclick="pn()">Submit</button>
+    <p id="output"></p>
+    <script>
+        function pn(){
+            let n=document.getElementById('demo').value;
+            if(isNaN(n) || (n<2)){
+                alert("Please enter a valid number");
+                return;
+            }
+            let num=Number(n);
+            let arr="";
+            for(i=2;i<=num;i++){
+                let prime=true;
+                for(j=2;j<i;j++){
+                    if(i%j === 0){
+                        prime=false;
+                        break;
+                    }
+                }
+                if(prime){
+                    if(arr === ""){
+                        arr=arr+i;
+                    }
+                    else{
+                        arr=arr+", "+i;
+                    }
+                }
+            }
+            document.getElementById('output').innerText="Prime Numbers: "+arr;
+        }
+    </script>
+</body>
+</html>
