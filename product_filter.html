@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Filtering</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+        .filter-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        select, input {
+            padding: 5px;
+            font-size: 14px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 30%;
+            margin: 10px;
+            display: inline-block;
+            text-align: center;
+        }
+        .product-card img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <a href="A6_index.html" target="_self">Back to Homepage</a><br>
+    <div class="container">
+        <h2>Product Filtering</h2>
+        <div class="filter-section">
+            <select id="categoryFilter" onchange="applyFilters()">
+                <option value="">All Categories</option>
+            </select>
+            <input type="number" id="minPrice" placeholder="Min Price" oninput="applyFilters()">
+            <input type="number" id="maxPrice" placeholder="Max Price" oninput="applyFilters()">
+        </div>
+        <div id="productsContainer"></div>
+    </div>
+    <script>
+        var productsData = [];
+        function fetchProducts() {
+            fetch('https://fakestoreapi.com/products')
+                .then(function(res) { return res.json(); })
+                .then(function(products) {
+                    productsData = products;
+                    applyFilters();
+                });
+        }
+
+        function fetchCategories() {
+            fetch('https://fakestoreapi.com/products/categories')
+                .then(function(res) { return res.json(); })
+                .then(function(categories) {
+                    var categoryFilter = document.getElementById('categoryFilter');
+                    for (var i = 0; i < categories.length; i++) {
+                        categoryFilter.innerHTML += '<option value="' + categories[i] + '">' + categories[i] + '</option>';
+                    }
+                });
+        }
+
+        function applyFilters() {
+            var category = document.getElementById('categoryFilter').value;
+            var minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+            var maxPrice = parseFloat(document.getElementById('maxPrice').value) || Number.MAX_VALUE;
+            
+            var filteredProducts = productsData.filter(function(product) {
+                return (category === "" || product.category === category) &&
+                       (product.price >= minPrice && product.price <= maxPrice);
+            });
+            
+            displayProducts(filteredProducts);
+        }
+
+        function displayProducts(products) {
+            var container = document.getElementById('productsContainer');
+            container.innerHTML = "";
+            for (var i = 0; i < products.length; i++) {
+                var product = products[i];
+                container.innerHTML +=
+                    '<div class="product-card">' +
+                        '<img src="' + product.image + '" alt="' + product.title + '">' +
+                        '<h3>' + product.title + '</h3>' +
+                        '<p>$' + product.price + '</p>' +
+                    '</div>';
+            }
+        }
+        
+        fetchCategories();
+        fetchProducts();
+    </script>
+</body>
+</html>
