@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <style>
+        .row { color: aliceblue; }
+        img { max-width: 100%; }
+        .Des { padding-left: 25px; }
+        #ha { padding-left: 200px; }
+        #he { padding-left: 200px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">TravelSite</a>
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#ga">Gallery</a></li>
+
+            <!-- Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                  Destinations
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Dubai</a>
+                  <a class="dropdown-item" href="#">Paris</a>
+                  <a class="dropdown-item" href="#">Thailand</a>
+                </div>
+            </li>
+
+            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+          </ul>
+      </nav>
+
+      <br>
+      <!--<img src="https://placehold.co/1535x500?text=Mountain+Adventures" alt="mountains">-->
+
+      <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+        </div>
+        
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://placehold.co/1535x500?text=Beautiful+Beaches" alt="Beautiful Beaches" class="d-block" style="width:100%">
+          </div>
+          <div class="carousel-item">
+            <img src="https://placehold.co/1535x500?text=Mountain+Adventures" alt="Mountain Adventures" class="d-block" style="width:100%">
+          </div>
+          <div class="carousel-item">
+            <img src="https://placehold.co/1535x500?text=City+Lights" alt="City Lights" class="d-block" style="width:100%">
+          </div>
+        </div>
+        
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+      <br><br> 
+
+      <div id="ga">
+          <h3 style="text-align: center;">Gallery</h3>
+          <img src="https://placehold.co/350x200?text=Destination+1" class="Des" id="ha">
+          <img src="https://placehold.co/350x200?text=Destination+2" class="Des">
+          <img src="https://placehold.co/350x200?text=Destination+3" class="Des">
+          <br><br>
+          <img src="https://placehold.co/350x200?text=Destination+4" class="Des" id="he">
+          <img src="https://placehold.co/350x200?text=Destination+5" class="Des">
+          <img src="https://placehold.co/350x200?text=Destination+6" class="Des">
+          <br><br>
+      </div>
+
+      <h3 style="text-align: center;">FAQs</h3>
+        <div class="container">
+            <div class="faq-item">
+                <p class="faq-question">
+                    What is the best time to travel? <span class="arrow">▼</span>
+                </p>
+                <p class="faq-answer">
+                    The best time to travel depends on your destination, but generally, spring and fall offer pleasant weather and fewer crowds.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <p class="faq-question">
+                    Are there group discounts? <span class="arrow">▼</span>
+                </p>
+                <p class="faq-answer">
+                    Yes, we offer group discounts for bookings of 5 or more people.
+                </p>
+            </div>
+
+        </div><br>
+    
+    <h3 style="text-align: center;">Contact Us</h3><br>
+    <div class="d-flex justify-content-center align-items-center">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Book now</button>
+    </div>
+    <br><br>
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Booking Form</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="destination" class="form-label">Destinations</label>
+                        <select class="form-select" id="destination">
+                            <option selected>Choose your destination</option>
+                            <option value="Dubai">Dubai</option>
+                            <option value="Paris">Paris</option>
+                            <option value="Thailand">Thailand</option>
+                        </select>
+                    </div>
+                </form>
+              <button type="button" class="btn btn-success" data-bs-dismiss="modal">Submit</button>
+      
+          </div>
+        </div>
+      </div>
+<style>
+    .faq-item {
+        border-bottom: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    .faq-question {
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background: #dce4ec;
+        border-radius: 5px;
+    }
+
+    .faq-answer {
+        display: none;
+        background: #b4cbea;
+        padding: 15px;
+        margin-top: 5px;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .arrow {
+        font-size: 10px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .rotate {
+        transform: rotate(180deg);
+    }
+</style>
+
+<script>
+    document.querySelectorAll(".faq-question").forEach(function(question) {
+        question.addEventListener("click", function() {
+            var answer = this.nextElementSibling;
+            var arrow = this.querySelector(".arrow");
+
+            if (answer.style.display === "none" || answer.style.display === "") {
+                answer.style.display = "block";
+                arrow.classList.add("rotate");
+            } else {
+                answer.style.display = "none";
+                arrow.classList.remove("rotate");
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
