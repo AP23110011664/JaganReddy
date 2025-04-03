@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+        .search-box, .currency-dropdown {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 30%;
+            margin: 10px;
+            display: inline-block;
+            text-align: center;
+        }
+        .product-card img {
+            width: 100px;
+            height: 100px;
+        }
+        .original-price {
+            text-decoration: line-through;
+            color: red;
+        }
+        .discounted-price {
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <a href="A6_index.html" target="_self">Back to Homepage</a><br>
+    <div class="container">
+        <h2>Product Search</h2>
+        <input type="text" id="searchBox" class="search-box" placeholder="Search for a product..." oninput="searchProducts()">
+        <select id="currencySelect" class="currency-dropdown" onchange="updateCurrency()">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="INR">Indian Rupee (INR)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="JPY">Japanese Yen (JPY)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+        </select>
+        <div id="productsContainer"></div>
+    </div>
+    <script>
+        var productsData = [];
+        var exchangeRates = { "USD": 1 };
+
+        function fetchProducts() {
+            fetch('https://fakestoreapi.com/products')
+                .then(res => res.json())
+                .then(data => {
+                    productsData = data;
+                    updateCurrency();
+                });
+        }
+
+        function fetchExchangeRates(targetCurrency) {
+            fetch(https://api.frankfurter.app/latest?from=USD&to=${targetCurrency})
+                .then(res => res.json())
+                .then(response => {
+                    exchangeRates[targetCurrency] = response.rates[targetCurrency] || 1;
+                    displayProducts(productsData);
+                });
+        }
+
+        function displayProducts(products) {
+            var container = document.getElementById('productsContainer');
+            container.innerHTML = "";
+            var selectedCurrency = document.getElementById('currencySelect').value;
+            var conversionRate = exchangeRates[selectedCurrency] || 1;
+
+            products.forEach(product => {
+                var originalPrice = (product.price * conversionRate).toFixed(2);
+                var discountedPrice = (originalPrice * 0.95).toFixed(2); // 5% discount
+                container.innerHTML += `
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.title}">
+                        <h3>${product.title}</h3>
+                        <p class="original-price">${originalPrice} ${selectedCurrency}</p>
+                        <p class="discounted-price">${discountedPrice} ${selectedCurrency} (5% off)</p>
+                    </div>`;
+            });
+        }
+
+        function updateCurrency() {
+            var selectedCurrency = document.getElementById('currencySelect').value;
+            if (selectedCurrency === "USD") {
+                displayProducts(productsData);
+            } else {
+                fetchExchangeRates(selectedCurrency);
+            }
+        }
+
+        function searchProducts() {
+            var query = document.getElementById('searchBox').value.toLowerCase();
+            var filteredProducts = productsData.filter(product => product.title.toLowerCase().includes(query));
+            displayProducts(filteredProducts);
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html>
